@@ -222,17 +222,40 @@ footer{position:relative;z-index:1}
 .bar{position:relative;height:3px;margin:1.05rem 0 .7rem;border-radius:999px;background:rgba(251,243,233,.14);cursor:pointer}
 .bar i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:var(--gold);box-shadow:0 0 12px rgba(201,162,39,.55);transition:width .12s linear}
 .bar:focus-visible{outline:1px solid var(--rose);outline-offset:6px}
+
+/* ---------- grown-up atmosphere: slow aurora wash behind everything ---------- */
+.aurora{position:fixed;inset:-20vh -10vw;pointer-events:none;z-index:0;overflow:hidden}
+.aurora i{position:absolute;display:block;border-radius:50%;filter:blur(60px);opacity:.5;
+  animation:drift 26s ease-in-out infinite alternate}
+.aurora i:nth-child(1){width:60vw;height:60vw;left:-8vw;top:-6vh;
+  background:radial-gradient(circle,rgba(231,154,166,.30),rgba(231,154,166,0) 68%)}
+.aurora i:nth-child(2){width:52vw;height:52vw;right:-6vw;top:22vh;
+  background:radial-gradient(circle,rgba(201,162,39,.22),rgba(201,162,39,0) 70%);
+  animation-duration:34s;animation-delay:-6s}
+.aurora i:nth-child(3){width:46vw;height:46vw;left:18vw;bottom:-12vh;
+  background:radial-gradient(circle,rgba(180,89,107,.26),rgba(180,89,107,0) 70%);
+  animation-duration:30s;animation-delay:-12s}
+@keyframes drift{
+  0%{transform:translate3d(0,0,0) scale(1)}
+  50%{transform:translate3d(3vw,-4vh,0) scale(1.12)}
+  100%{transform:translate3d(-3vw,3vh,0) scale(1.05)}
+}
+/* cinematic edge falloff so the page feels deliberate, not flat */
+body:after{content:'';position:fixed;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(120% 90% at 50% 40%,rgba(0,0,0,0) 45%,rgba(10,6,8,.55) 100%)}
+@media (prefers-reduced-motion:reduce){.aurora i{animation:none}}
 </style>
 </head>
 <body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
 <canvas id="petals" aria-hidden="true"></canvas>
 <canvas id="hearts" aria-hidden="true"></canvas>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <header class="hero">
-  <p class="eyebrow">For my sister</p>
+  <p class="eyebrow">For my sister, a grown woman</p>
   <h1>For Joan<br><em>Kabura Mwangi</em></h1>
-  <p>You are the only sister I have, and I am the only brother you have. Whatever this season is doing to you, it does not get to decide who you are.</p>
+  <p>You are the only sister I have, and I am the only brother you have. You are a grown woman carrying a hard season in a country that is not yours, and it does not get to decide who you are.</p>
   <button class="btn" id="start">Start Exploring</button>
   <span class="scroll-hint">Scroll</span>
 </header>
@@ -317,7 +340,7 @@ footer{position:relative;z-index:1}
           <img alt="Joan">
           <span>Add a photo</span>
         </label>
-        <p class="cap">You, on a good day</p>
+        <p class="cap">You, before the weight</p>
       </div>
       <div class="shot rv">
         <label class="photo">
@@ -616,21 +639,22 @@ footer{position:relative;z-index:1}
     return {
       x: Math.random() * w,
       y: anywhere ? Math.random() * h : -30 * dpr,
-      r: (4 + Math.random() * 6) * dpr,
-      vy: (14 + Math.random() * 20) * dpr,
+      z: 0.45 + Math.random() * 0.55,
+      r: (3 + Math.random() * 7) * dpr,
+      vy: (9 + Math.random() * 26) * dpr,
       vx: (Math.random() - 0.5) * 12 * dpr,
       sw: Math.random() * 6.28,
       rot: Math.random() * 6.28,
       vr: (Math.random() - 0.5) * 1.1,
-      a: 0.22 + Math.random() * 0.3
+      a: 0.14 + Math.random() * 0.42
     };
   }
   function seed() {
     atmosSize();
     petals = []; sparks = [];
     var w = pc.width, h = pc.height;
-    var pn = window.innerWidth < 520 ? 9 : 16;
-    var sn = window.innerWidth < 520 ? 8 : 14;
+    var pn = window.innerWidth < 520 ? 20 : 34;
+    var sn = window.innerWidth < 520 ? 16 : 26;
     for (var i = 0; i < pn; i++) petals.push(petal(w, h, true));
     for (var j = 0; j < sn; j++) sparks.push({ x: Math.random() * w, y: Math.random() * h, r: (0.8 + Math.random() * 1.5) * dpr, ph: Math.random() * 6.28, sp: 0.5 + Math.random() * 0.9 });
   }
@@ -653,10 +677,10 @@ footer{position:relative;z-index:1}
       pctx.save();
       pctx.translate(p.x, p.y);
       pctx.rotate(p.rot);
-      pctx.globalAlpha = p.a;
+      pctx.globalAlpha = p.a * (0.5 + p.z * 0.5);
       pctx.fillStyle = '#e79aa6';
       pctx.beginPath();
-      pctx.ellipse(0, 0, p.r, p.r * 0.58, 0, 0, 6.2832);
+      pctx.ellipse(0, 0, p.r * (0.65 + p.z * 0.6), p.r * 0.58 * (0.65 + p.z * 0.6), 0, 0, 6.2832);
       pctx.fill();
       pctx.restore();
     }
