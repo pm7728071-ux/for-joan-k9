@@ -217,6 +217,11 @@ footer{position:relative;z-index:1}
 .march{margin-top:1.6rem;border-top:2px solid var(--gold);padding-top:1.2rem}
 .march .digits{font-size:clamp(2rem,9vw,3rem)}
 .march .line{font-size:.9rem;line-height:1.7;color:var(--ink-soft);margin:.8rem 0 0}
+
+/* ---------- song player ---------- */
+.bar{position:relative;height:3px;margin:1.05rem 0 .7rem;border-radius:999px;background:rgba(251,243,233,.14);cursor:pointer}
+.bar i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:999px;background:var(--gold);box-shadow:0 0 12px rgba(201,162,39,.55);transition:width .12s linear}
+.bar:focus-visible{outline:1px solid var(--rose);outline-offset:6px}
 </style>
 </head>
 <body>
@@ -391,11 +396,12 @@ footer{position:relative;z-index:1}
     <div class="success rv">
       <h3>A song for Joan</h3>
       <p class="note">I made this for you. Whenever you feel small over there, put it on and remember there is a person here who thinks about you every single day.</p>
-      <audio id="song-audio" preload="none">
+      <audio id="song-audio" preload="metadata">
         <source src="song.mp3" type="audio/mpeg">
       </audio>
       <button class="btn gold" id="song-play">Play the song</button>
-      <p class="sign" id="song-meta">Coming soon</p>
+      <div class="bar" id="song-bar" role="slider" tabindex="0" aria-label="Seek through the song" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="song-fill"></i></div>
+      <p class="sign song-meta" id="song-meta">Loading the song</p>
     </div>
   </section>
 
@@ -526,13 +532,48 @@ footer{position:relative;z-index:1}
   var play = document.getElementById('song-play');
   var meta = document.getElementById('song-meta');
   if (audio) {
+    var bar = document.getElementById('song-bar');
+    var fill = document.getElementById('song-fill');
+    function fmtTime(sec) {
+      if (!isFinite(sec) || sec < 0) sec = 0;
+      var t = Math.round(sec);
+      return Math.floor(t / 60) + ':' + pad(t % 60);
+    }
+    function showTime() {
+      if (!meta) return;
+      var total = isFinite(audio.duration) ? fmtTime(audio.duration) : '0:00';
+      meta.textContent = fmtTime(audio.currentTime) + ' / ' + total;
+    }
     audio.addEventListener('loadedmetadata', function () {
       if (meta && audio.duration && isFinite(audio.duration)) {
-        var t = Math.round(audio.duration);
-        meta.textContent = Math.floor(t / 60) + ':' + pad(t % 60);
+        meta.textContent = '0:00 / ' + fmtTime(audio.duration);
       }
     });
-    audio.addEventListener('error', function () { if (meta) meta.textContent = 'Coming soon'; });
+    // metadata can arrive before this script runs on a fast connection
+    if (audio.readyState >= 1 && isFinite(audio.duration) && audio.duration > 0) {
+      meta.textContent = '0:00 / ' + fmtTime(audio.duration);
+    }
+    audio.addEventListener('timeupdate', function () {
+      showTime();
+      if (bar && fill && isFinite(audio.duration) && audio.duration > 0) {
+        var pct = Math.min(100, (audio.currentTime / audio.duration) * 100);
+        fill.style.width = pct + '%';
+        bar.setAttribute('aria-valuenow', Math.round(pct));
+      }
+    });
+    if (bar) {
+      var seek = function (clientX) {
+        var r = bar.getBoundingClientRect();
+        var ratio = Math.min(1, Math.max(0, (clientX - r.left) / r.width));
+        if (isFinite(audio.duration) && audio.duration > 0) audio.currentTime = ratio * audio.duration;
+      };
+      bar.addEventListener('click', function (e) { seek(e.clientX); });
+      bar.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 5); e.preventDefault(); }
+        if (e.key === 'ArrowLeft') { audio.currentTime = Math.max(0, audio.currentTime - 5); e.preventDefault(); }
+      });
+    }
+    audio.addEventListener('error', function () { if (meta) meta.textContent = 'The song could not load'; });
     audio.addEventListener('ended', function () { if (play) play.textContent = 'Play the song'; });
   }
   if (play && audio) {
@@ -541,8 +582,8 @@ footer{position:relative;z-index:1}
         var p = audio.play();
         if (p && p.catch) {
           p.then(function () { play.textContent = 'Pause'; }).catch(function () {
-            if (meta) meta.textContent = 'The song is on its way';
-            toast('The song lands here soon, Joan.');
+            if (meta) meta.textContent = 'Tap play to hear it';
+            toast('Tap play once more to start the song, Joan.');
           });
         }
       } else {
