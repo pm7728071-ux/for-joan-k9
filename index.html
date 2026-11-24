@@ -206,119 +206,154 @@ footer{position:relative;z-index:1}
 .song-bar{flex:1 1 12rem;height:3px;border-radius:99px;background:rgba(255,255,255,.10);overflow:hidden;min-width:8rem}
 .song-bar i{display:block;height:100%;width:0;background:var(--gold);transition:width .25s linear}
 
+
+/* ---------- two photo frames ---------- */
+.shots{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-top:1.8rem}
+@media(max-width:420px){.shots{grid-template-columns:1fr;gap:1rem}}
+.shot{position:relative}
+.shot .photo{aspect-ratio:3/4;margin:0}
+.shot .cap{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin:.55rem 0 0;text-align:center}
+/* ---------- march ---------- */
+.march{margin-top:1.6rem;border-top:2px solid var(--gold);padding-top:1.2rem}
+.march .digits{font-size:clamp(2rem,9vw,3rem)}
+.march .line{font-size:.9rem;line-height:1.7;color:var(--ink-soft);margin:.8rem 0 0}
 </style>
 </head>
 <body>
-
 <canvas id="petals" aria-hidden="true"></canvas>
 <canvas id="hearts" aria-hidden="true"></canvas>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<header class="hero">
+  <p class="eyebrow">For my sister</p>
+  <h1>For Joan<br><em>Kabura Mwangi</em></h1>
+  <p>You are the only sister I have, and I am the only brother you have. Whatever this season is doing to you, it does not get to decide who you are.</p>
+  <button class="btn" id="start">Start Exploring</button>
+  <span class="scroll-hint">Scroll</span>
+</header>
+
 <div class="wrap">
 
-  <header class="hero">
-    <p class="eyebrow">A little corner of the internet</p>
-    <h1>For<br><em>Joan Kabura Mwangi</em></h1>
-    <p>For my sister, who packed a life into a suitcase and is building something bigger than the distance between us.</p>
-    <button class="btn" id="start">Start Exploring</button>
-    <span class="scroll-hint">Scroll</span>
-  </header>
-
   <section id="clocks">
-    <p class="eyebrow rv">Wherever you are</p>
-    <h2 class="rv">One hour apart, <em>never far</em></h2>
-    <p class="lede rv">Two clocks, running at the same time. When yours is quiet, ours is still thinking of you.</p>
-    <div class="clocks">
-      <div class="clock rv">
-        <p class="place">Beirut, where you are</p>
-        <p class="time" id="clk-leb">--:--</p>
-        <p class="note" id="day-leb">&nbsp;</p>
+    <p class="eyebrow rv">Two clocks, one family</p>
+    <h2 class="rv">Wherever you are, <em>we are up too</em></h2>
+    <p class="lede rv">One hour apart. Never far.</p>
+    <div class="counts">
+      <div class="count rv">
+        <p class="label">Beirut, where you are</p>
+        <p class="what" id="clk-leb">--:--</p>
+        <p class="line" id="clk-leb-day">Lebanon time</p>
       </div>
-      <div class="clock rv">
-        <p class="place">Nairobi, where we are</p>
-        <p class="time" id="clk-ke">--:--</p>
-        <p class="note" id="day-ke">&nbsp;</p>
+      <div class="count rv">
+        <p class="label">Nairobi, where we are</p>
+        <p class="what" id="clk-ke">--:--</p>
+        <p class="line" id="clk-ke-day">Kenya time</p>
       </div>
     </div>
   </section>
 
+  <hr class="rule">
+
+  <section id="march">
+    <p class="eyebrow rv">Coming home</p>
+    <h2 class="rv">You are coming home <em>in March</em></h2>
+    <p class="lede rv">The exact date is not fixed yet. When it is, I will be the one waiting at the gate, and I will not be late.</p>
+    <div class="march rv">
+      <div class="digits" id="cd-march">
+        <div><b data-d>0</b><small>days</small></div>
+        <div><b data-h>00</b><small>hrs</small></div>
+        <div><b data-m>00</b><small>min</small></div>
+        <div><b data-s>00</b><small>sec</small></div>
+      </div>
+      <p class="line">That is how long until March begins. Your exact day is still open, and that is fine. What matters is that there is a month with your name on it now.</p>
+    </div>
+  </section>
+
+  <hr class="rule">
+
   <section id="proud">
     <p class="eyebrow rv">Proud of you</p>
-    <h2 class="rv">Four reasons I am <em>proud of you</em></h2>
-    <p class="lede rv">Read these on a good day. Read them twice on a hard one.</p>
+    <h2 class="rv">Things I have watched you <em>survive</em></h2>
+    <p class="lede rv">Not one of these was easy. You did them anyway.</p>
     <ol class="tl">
       <li class="ms rv">
-        <span class="chip" contenteditable="true">Chapter One</span>
-        <h3 contenteditable="true">The Bravest Yes</h3>
-        <label class="photo">
-          <input type="file" accept="image/*" data-photo>
-          <img alt="Joan">
-          <span>Add a photo</span>
-        </label>
-        <p class="edit" contenteditable="true">You said yes to work in a country where you knew no one. That is not a small thing, Joan. Plenty of people talk about courage; you bought the ticket and lived it.</p>
+        <span class="chip">Chapter One</span>
+        <h3>You left everything you knew</h3>
+        <p class="p-edit">You got on a plane to a country where nobody knew your name, where the language on the street was not yours and the food did not taste like home. You did not do it because you were fearless. You did it because you were brave, and there is a difference. Fearless people feel nothing. Brave people feel all of it and go anyway.</p>
       </li>
       <li class="ms rv">
-        <span class="chip" contenteditable="true">Chapter Two</span>
-        <h3 contenteditable="true">The Work Nobody Sees</h3>
-        <label class="photo">
-          <input type="file" accept="image/*" data-photo>
-          <img alt="Joan at work">
-          <span>Add a photo</span>
-        </label>
-        <p class="edit" contenteditable="true">Running a home for someone else takes patience, organisation and heart, and you do it far from your own people. Every early morning you show up still counts, even on the days nobody says thank you.</p>
+        <span class="chip">Chapter Two</span>
+        <h3>You do work nobody applauds</h3>
+        <p class="p-edit">You keep another family's home running: the cleaning, the cooking, the order, the thousand small things that only get noticed when they are missing. That work is real work. It takes patience, brains and heart, and you do it far from the people who would have thanked you for it every single day.</p>
       </li>
       <li class="ms rv">
-        <span class="chip" contenteditable="true">Chapter Three</span>
-        <h3 contenteditable="true">The Days That Feel Heavy</h3>
-        <label class="photo">
-          <input type="file" accept="image/*" data-photo>
-          <img alt="Joan">
-          <span>Add a photo</span>
-        </label>
-        <p class="edit" contenteditable="true">Some days the distance wins and everything feels like too much. That does not mean you are failing, it means you are human and far from home. Feel it, then remember who you are and who is standing behind you.</p>
+        <span class="chip">Chapter Three</span>
+        <h3>You cry, and you still show up</h3>
+        <p class="p-edit">There are mornings you wake up heavy and still put on the uniform and go. That is the hardest kind of strength there is, the kind nobody claps for. On the days you feel like you are failing, hear me: you are not failing. You are carrying something heavy, and you are still walking.</p>
       </li>
       <li class="ms rv">
-        <span class="chip" contenteditable="true">Chapter Four</span>
-        <h3 contenteditable="true">What You Are Building</h3>
-        <label class="photo">
-          <input type="file" accept="image/*" data-photo>
-          <img alt="Joan">
-          <span>Add a photo</span>
-        </label>
-        <p class="edit" contenteditable="true">This chapter is not the whole story. It is the part that makes the rest possible: the plan, the savings, the woman who comes home knowing she can handle anything. Keep going, you are closer than it feels.</p>
+        <span class="chip">Chapter Four</span>
+        <h3>You are coming home different</h3>
+        <p class="p-edit">Not broken. Not smaller. Different in the way iron is different after the fire. You will come back knowing you can survive things you once thought you could not, and nobody will ever be able to take that from you. I cannot wait to meet that version of you.</p>
       </li>
     </ol>
   </section>
 
   <hr class="rule">
 
+  <section id="shots">
+    <p class="eyebrow rv">Two pictures</p>
+    <h2 class="rv">Two frames, <em>just for you</em></h2>
+    <p class="lede rv">Only two. Tap a frame to add a photo whenever you are ready.</p>
+    <div class="shots">
+      <div class="shot rv">
+        <label class="photo">
+          <input type="file" accept="image/*" data-photo>
+          <img alt="Joan">
+          <span>Add a photo</span>
+        </label>
+        <p class="cap">You, on a good day</p>
+      </div>
+      <div class="shot rv">
+        <label class="photo">
+          <input type="file" accept="image/*" data-photo>
+          <img alt="Joan">
+          <span>Add a photo</span>
+        </label>
+        <p class="cap">You, the day you land</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="rule">
+
   <section id="see">
-    <p class="eyebrow rv">Tap a card</p>
-    <h2 class="rv">Things I see in you that <em>you forget</em></h2>
+    <p class="eyebrow rv">Tap for a secret note</p>
+    <h2 class="rv">What I see when <em>I look at you</em></h2>
     <p class="lede rv">Four cards. Open one, or open them all.</p>
     <div class="flips">
-      <button class="flip rv" type="button" aria-pressed="false" aria-label="Card 1: Steady">
+      <button class="flip rv" type="button" aria-pressed="false" aria-label="Secret note 1: Your strength">
         <span class="flip-in">
-          <span class="face front"><span class="n">01</span><span class="h">Steady</span><span class="tap">Tap to open</span></span>
-          <span class="face back"><span class="n">01</span><span class="t">You keep going on the days nobody would blame you for stopping. That is strength, even when it does not feel like it.</span></span>
+          <span class="face front"><span class="n">01</span><span class="h">Your strength</span><span class="tap">Tap for a secret note</span></span>
+          <span class="face back"><span class="n">01</span><span class="t">You have carried things you never asked for, and you are still standing. That is not luck. That is you.</span></span>
         </span>
       </button>
-      <button class="flip rv" type="button" aria-pressed="false" aria-label="Card 2: Warm">
+      <button class="flip rv" type="button" aria-pressed="false" aria-label="Secret note 2: Your silence">
         <span class="flip-in">
-          <span class="face front"><span class="n">02</span><span class="h">Warm</span><span class="tap">Tap to open</span></span>
-          <span class="face back"><span class="n">02</span><span class="t">You look after people as if it costs you nothing, even when it costs you plenty. That kind of heart is rare.</span></span>
+          <span class="face front"><span class="n">02</span><span class="h">Your silence</span><span class="tap">Tap for a secret note</span></span>
+          <span class="face back"><span class="n">02</span><span class="t">The way you say "I am fine" when it is not fine. I hear it anyway, even from that far. You do not have to perform being okay with me.</span></span>
         </span>
       </button>
-      <button class="flip rv" type="button" aria-pressed="false" aria-label="Card 3: Clever">
+      <button class="flip rv" type="button" aria-pressed="false" aria-label="Secret note 3: Your fight">
         <span class="flip-in">
-          <span class="face front"><span class="n">03</span><span class="h">Clever</span><span class="tap">Tap to open</span></span>
-          <span class="face back"><span class="n">03</span><span class="t">You learn fast, adapt faster, and make hard rooms feel easy. Anyone who has worked with you knows it.</span></span>
+          <span class="face front"><span class="n">03</span><span class="h">Your fight</span><span class="tap">Tap for a secret note</span></span>
+          <span class="face back"><span class="n">03</span><span class="t">You did not come this far to come this far. Keep going, Joan. March is closer than it feels today.</span></span>
         </span>
       </button>
-      <button class="flip rv" type="button" aria-pressed="false" aria-label="Card 4: Loved">
+      <button class="flip rv" type="button" aria-pressed="false" aria-label="Secret note 4: Your worth">
         <span class="flip-in">
-          <span class="face front"><span class="n">04</span><span class="h">Loved</span><span class="tap">Tap to open</span></span>
-          <span class="face back"><span class="n">04</span><span class="t">Never mistake distance for being alone. There is a whole family here with your name in every prayer.</span></span>
+          <span class="face front"><span class="n">04</span><span class="h">Your worth</span><span class="tap">Tap for a secret note</span></span>
+          <span class="face back"><span class="n">04</span><span class="t">Your value was never in that job, that house, or what anyone pays you. It is in you, and it does not travel with a passport.</span></span>
         </span>
       </button>
     </div>
@@ -327,21 +362,21 @@ footer{position:relative;z-index:1}
   <hr class="rule">
 
   <section id="letter">
-    <p class="eyebrow rv">For the hard days</p>
-    <h2 class="rv">A letter, <em>open it any time</em></h2>
-    <p class="lede rv">You do not have to wait for a special date. Tap the envelope whenever you need it.</p>
+    <p class="eyebrow rv">From your brother</p>
+    <h2 class="rv">Open when <em>the day is heavy</em></h2>
+    <p class="lede rv">No lock on this one. Open it as many times as you need.</p>
     <div class="env-wrap">
-      <div class="env rv" id="env" role="button" tabindex="0" aria-expanded="false" aria-label="Open the letter from Peter">
+      <div class="env rv" id="env" role="button" tabindex="0" aria-expanded="false" aria-label="Open the letter">
         <div class="front">
-          <b>Open when the day is heavy</b>
+          <b>Open when you need it</b>
           <small>Tap to open</small>
         </div>
         <div class="letter">
-          <h4 class="letter-title" contenteditable="true">You Are Doing Better Than You Think</h4>
-          <p contenteditable="true">Joan, if you are reading this on a hard day, read it slowly. You are not stuck, you are in the middle, and the middle is always the least glamorous part of any story worth telling.</p>
-          <p contenteditable="true">You left home to build something for yourself and for us, and you have done it with grace on days that would have broken other people. Being tired does not cancel any of that.</p>
-          <p contenteditable="true">So take the day. Rest if you can. Then get up and do one small thing, and let that be enough for today. You are loved from here, loudly and without conditions.</p>
-          <p class="sign" contenteditable="true">Your brother, Peter.</p>
+          <h4 class="letter-title">Joan, read this slowly</h4>
+          <p>If you are reading this on a hard day, I want you to stop for a second and look at where you are. You are in a country that is not yours, doing a job that takes more out of you than anyone there understands, and you are still going. Not everyone could do that. Not everyone would.</p>
+          <p>I know some days the distance wins. I know there are nights you cry quietly so nobody hears, and mornings you want to pack everything and come home. That does not make you weak. It makes you human. Feel it, then get up, because you have a whole family here whose day gets better just knowing you are still out there fighting.</p>
+          <p>You are not a burden. You are not a disappointment. You are not behind. You are my sister, my only sister, and I am proud of you in a way I do not have enough words for. Keep going. March is coming, and I will be there.</p>
+          <p class="sign">Your only brother, Peter.</p>
         </div>
       </div>
     </div>
@@ -351,33 +386,36 @@ footer{position:relative;z-index:1}
 
   <section id="song">
     <p class="eyebrow rv">From home</p>
-    <h2 class="rv">A song, <em>just for you</em></h2>
-    <p class="lede rv">I made this one with you in mind. Play it when the day is long.</p>
-    <div class="song rv">
-      <h3 contenteditable="true">For Joan</h3>
-      <p contenteditable="true">Press play, close your eyes, and remember there is someone at home who is proud of you every single day.</p>
-      <div class="song-row">
-        <button class="song-btn" id="play" type="button" aria-label="Play the song for Joan">
-          <svg id="play-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
-        </button>
-        <div class="song-bar"><i id="song-fill"></i></div>
-        <span class="song-meta" id="song-meta">Loading</span>
-      </div>
-      <audio id="song-audio" preload="metadata" src="song.mp3"></audio>
+    <h2 class="rv">A song I made <em>for you</em></h2>
+    <p class="lede rv">Play it when the day is long. It is yours.</p>
+    <div class="success rv">
+      <h3>A song for Joan</h3>
+      <p class="note">I made this for you. Whenever you feel small over there, put it on and remember there is a person here who thinks about you every single day.</p>
+      <audio id="song-audio" preload="none">
+        <source src="song.mp3" type="audio/mpeg">
+      </audio>
+      <button class="btn gold" id="song-play">Play the song</button>
+      <p class="sign" id="song-meta">Coming soon</p>
     </div>
   </section>
 
   <hr class="rule">
 
-  <div class="kisswrap">
-    <button class="btn kiss" id="hug">Tap to Send a Hug</button>
-  </div>
+  <section id="hug">
+    <p class="eyebrow rv">One tap</p>
+    <h2 class="rv">Send her <em>a hug</em></h2>
+    <p class="lede rv">It costs nothing and it arrives instantly.</p>
+    <div class="kisswrap">
+      <button class="btn kiss" id="hug-btn">Tap to Send a Hug</button>
+    </div>
+  </section>
 
   <hr class="rule">
+
 </div>
 
 <footer>
-  <p>Made with all my love for my sister Joan Kabura Mwangi &mdash; from Peter.</p>
+  <p>Made with all my love for my sister Joan Kabura Mwangi — from your only brother, Peter.</p>
   <p class="sig">Peter</p>
 </footer>
 
@@ -386,44 +424,19 @@ footer{position:relative;z-index:1}
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var dpr = Math.min(window.devicePixelRatio || 1, 2);
-  function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
-  /* ---------- clocks ---------- */
-  function clockAt(tz) {
-    try {
-      return new Intl.DateTimeFormat('en-GB', { timeZone: tz, hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date());
-    } catch (e) { return '--:--'; }
-  }
-  function dayAt(tz) {
-    try {
-      return new Intl.DateTimeFormat('en-GB', { timeZone: tz, weekday: 'long', day: 'numeric', month: 'long' }).format(new Date());
-    } catch (e) { return ''; }
-  }
-  function tickClocks() {
-    var a = document.getElementById('clk-leb'), b = document.getElementById('clk-ke');
-    var c = document.getElementById('day-leb'), d = document.getElementById('day-ke');
-    if (a) a.textContent = clockAt('Asia/Beirut');
-    if (b) b.textContent = clockAt('Africa/Nairobi');
-    if (c) c.textContent = dayAt('Asia/Beirut');
-    if (d) d.textContent = dayAt('Africa/Nairobi');
-  }
-  tickClocks();
-  setInterval(tickClocks, 15000);
-
-  /* ---------- scroll reveals ---------- */
+  // ---------- reveal on scroll ----------
   var items = document.querySelectorAll('.rv');
   if ('IntersectionObserver' in window && !reduce) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
     }, { threshold: 0.14 });
-    Array.prototype.forEach.call(items, function (el) { io.observe(el); });
+    items.forEach(function (el) { io.observe(el); });
   } else {
-    Array.prototype.forEach.call(items, function (el) { el.classList.add('in'); });
+    items.forEach(function (el) { el.classList.add('in'); });
   }
 
-  /* ---------- smooth scroll ---------- */
+  // ---------- start button ----------
   var start = document.getElementById('start');
   if (start) {
     start.addEventListener('click', function () {
@@ -432,43 +445,114 @@ footer{position:relative;z-index:1}
     });
   }
 
-  /* ---------- photo slots ---------- */
-  Array.prototype.forEach.call(document.querySelectorAll('[data-photo]'), function (input) {
-    input.addEventListener('change', function () {
-      var f = input.files && input.files[0];
-      if (!f) return;
-      var img = input.parentNode.querySelector('img');
-      if (!img) return;
-      img.src = URL.createObjectURL(f);
-      input.parentNode.classList.add('has');
-    });
-  });
+  // ---------- clocks ----------
+  function pad(n) { return n < 10 ? '0' + n : '' + n; }
+  function clock(zone, timeId, dayId) {
+    var now = new Date();
+    var t, d;
+    try {
+      t = new Intl.DateTimeFormat('en-GB', { timeZone: zone, hour: '2-digit', minute: '2-digit', hour12: false }).format(now);
+      d = new Intl.DateTimeFormat('en-GB', { timeZone: zone, weekday: 'long' }).format(now);
+    } catch (e) { t = '--:--'; d = ''; }
+    var te = document.getElementById(timeId), de = document.getElementById(dayId);
+    if (te) te.textContent = t;
+    if (de) de.textContent = d;
+  }
+  function tickClocks() {
+    clock('Asia/Beirut', 'clk-leb', 'clk-leb-day');
+    clock('Africa/Nairobi', 'clk-ke', 'clk-ke-day');
+  }
 
-  /* ---------- flip cards ---------- */
+  // ---------- march countdown ----------
+  var march = new Date(2027, 2, 1, 0, 0, 0);
+  function tickMarch() {
+    var el = document.getElementById('cd-march');
+    if (!el) return;
+    var ms = march.getTime() - Date.now();
+    if (ms <= 0) { el.innerHTML = '<div><b>It is March.</b></div>'; return; }
+    var total = Math.floor(ms / 1000);
+    var d = Math.floor(total / 86400);
+    var h = Math.floor((total % 86400) / 3600);
+    var m = Math.floor((total % 3600) / 60);
+    var s = total % 60;
+    el.querySelector('[data-d]').textContent = d;
+    el.querySelector('[data-h]').textContent = pad(h);
+    el.querySelector('[data-m]').textContent = pad(m);
+    el.querySelector('[data-s]').textContent = pad(s);
+  }
+  tickClocks(); tickMarch();
+  setInterval(function () { tickClocks(); tickMarch(); }, 1000);
+
+  // ---------- flip cards ----------
   Array.prototype.forEach.call(document.querySelectorAll('.flip'), function (card) {
     function toggle() {
       card.setAttribute('aria-pressed', card.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
     }
     card.addEventListener('click', toggle);
     card.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); toggle(); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
     });
   });
 
-  /* ---------- letter envelope ---------- */
+  // ---------- letter ----------
   var env = document.getElementById('env');
   if (env) {
-    function toggleEnv() {
+    var toggleEnv = function () {
       var open = env.classList.toggle('open');
       env.setAttribute('aria-expanded', open ? 'true' : 'false');
-    }
+    };
     env.addEventListener('click', toggleEnv);
     env.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') { e.preventDefault(); toggleEnv(); }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleEnv(); }
     });
   }
 
-  /* ---------- toast ---------- */
+  // ---------- photos ----------
+  Array.prototype.forEach.call(document.querySelectorAll('[data-photo]'), function (input) {
+    input.addEventListener('change', function () {
+      var f = input.files && input.files[0];
+      if (!f) return;
+      var box = input.closest('.photo');
+      var img = box ? box.querySelector('img') : null;
+      if (!img) return;
+      var r = new FileReader();
+      r.onload = function (e) { img.src = e.target.result; box.classList.add('has'); };
+      r.readAsDataURL(f);
+    });
+  });
+
+  // ---------- song ----------
+  var audio = document.getElementById('song-audio');
+  var play = document.getElementById('song-play');
+  var meta = document.getElementById('song-meta');
+  if (audio) {
+    audio.addEventListener('loadedmetadata', function () {
+      if (meta && audio.duration && isFinite(audio.duration)) {
+        var t = Math.round(audio.duration);
+        meta.textContent = Math.floor(t / 60) + ':' + pad(t % 60);
+      }
+    });
+    audio.addEventListener('error', function () { if (meta) meta.textContent = 'Coming soon'; });
+    audio.addEventListener('ended', function () { if (play) play.textContent = 'Play the song'; });
+  }
+  if (play && audio) {
+    play.addEventListener('click', function () {
+      if (audio.paused) {
+        var p = audio.play();
+        if (p && p.catch) {
+          p.then(function () { play.textContent = 'Pause'; }).catch(function () {
+            if (meta) meta.textContent = 'The song is on its way';
+            toast('The song lands here soon, Joan.');
+          });
+        }
+      } else {
+        audio.pause();
+        play.textContent = 'Play the song';
+      }
+    });
+  }
+
+  // ---------- toast ----------
   function toast(msg) {
     var t = document.getElementById('toast');
     if (!t) return;
@@ -478,7 +562,7 @@ footer{position:relative;z-index:1}
     toast.timer = setTimeout(function () { t.classList.remove('on'); }, 4600);
   }
 
-  /* ---------- atmosphere: petals + sparkles ---------- */
+  // ---------- petals + sparkles ----------
   var pc = document.getElementById('petals');
   var pctx = pc ? pc.getContext('2d') : null;
   var petals = [], sparks = [], pRaf = null, pLast = 0;
@@ -501,7 +585,6 @@ footer{position:relative;z-index:1}
     };
   }
   function seed() {
-    if (!pc) return;
     atmosSize();
     petals = []; sparks = [];
     var w = pc.width, h = pc.height;
@@ -539,11 +622,11 @@ footer{position:relative;z-index:1}
     for (var k = 0; k < sparks.length; k++) {
       var s = sparks[k];
       s.ph += dt * s.sp;
-      var al = 0.22 + 0.5 * (0.5 + 0.5 * Math.sin(s.ph));
-      pctx.globalAlpha = al * 0.2;
+      var a = 0.22 + 0.5 * (0.5 + 0.5 * Math.sin(s.ph));
+      pctx.globalAlpha = a * 0.2;
       pctx.fillStyle = '#e8c56a';
       pctx.beginPath(); pctx.arc(s.x, s.y, s.r * 4.5, 0, 6.2832); pctx.fill();
-      pctx.globalAlpha = al;
+      pctx.globalAlpha = a;
       pctx.beginPath(); pctx.arc(s.x, s.y, s.r, 0, 6.2832); pctx.fill();
     }
     pctx.globalAlpha = 1;
@@ -551,20 +634,24 @@ footer{position:relative;z-index:1}
   }
   if (pctx) {
     seed();
-    window.addEventListener('resize', seed);
-    if (reduce) { drawAtmos(performance.now(), true); }
-    else { pRaf = requestAnimationFrame(function (ts) { drawAtmos(ts, false); }); }
+    window.addEventListener('resize', function () { seed(); if (reduce) drawAtmos(performance.now(), true); });
+    if (reduce) drawAtmos(performance.now(), true);
+    else pRaf = requestAnimationFrame(function (ts) { drawAtmos(ts, false); });
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) { if (pRaf) { cancelAnimationFrame(pRaf); pRaf = null; } }
       else if (!pRaf && !reduce) { pLast = 0; pRaf = requestAnimationFrame(function (ts) { drawAtmos(ts, false); }); }
     });
   }
 
-  /* ---------- hearts for the hug ---------- */
+  // ---------- hearts ----------
   var hc = document.getElementById('hearts');
   var hctx = hc ? hc.getContext('2d') : null;
   var hearts = [], hRaf = null, hLast = 0;
-  function heartsSize() { if (!hc) return; hc.width = Math.floor(window.innerWidth * dpr); hc.height = Math.floor(window.innerHeight * dpr); }
+  function heartsSize() {
+    if (!hc) return;
+    hc.width = Math.floor(window.innerWidth * dpr);
+    hc.height = Math.floor(window.innerHeight * dpr);
+  }
   heartsSize();
   window.addEventListener('resize', heartsSize);
   function heartShape(c, x, y, s) {
@@ -614,57 +701,19 @@ footer{position:relative;z-index:1}
     if (hearts.length) hRaf = requestAnimationFrame(drawHearts);
     else hctx.clearRect(0, 0, hc.width, hc.height);
   }
-  var hug = document.getElementById('hug');
-  if (hug) {
-    hug.addEventListener('click', function () {
+  var hugBtn = document.getElementById('hug-btn');
+  if (hugBtn) {
+    hugBtn.addEventListener('click', function () {
       if (!reduce) hugBurst();
       toast('Hug on its way to Beirut. It arrives instantly.');
     });
   }
 
-  /* ---------- song player ---------- */
-  var audio = document.getElementById('song-audio');
-  var playBtn = document.getElementById('play');
-  var fill = document.getElementById('song-fill');
-  var meta = document.getElementById('song-meta');
-  var ico = document.getElementById('play-ico');
-  function setMeta(txt) { if (meta) meta.textContent = txt; }
-  function setIcon(playing) {
-    if (!ico) return;
-    ico.innerHTML = playing
-      ? '<path d="M8 5h3v14H8zM13 5h3v14h-3z"/>'
-      : '<path d="M8 5.5v13l11-6.5z"/>';
-  }
-  function fmt(s) {
-    if (!isFinite(s)) return '';
-    var m = Math.floor(s / 60), r = Math.floor(s % 60);
-    return m + ':' + pad(r);
-  }
-  if (audio) {
-    audio.addEventListener('loadedmetadata', function () { setMeta(fmt(audio.duration) + ' long'); });
-    audio.addEventListener('error', function () { setMeta('Coming soon'); });
-    audio.addEventListener('timeupdate', function () {
-      if (fill && audio.duration) fill.style.width = Math.round((audio.currentTime / audio.duration) * 100) + '%';
-      setMeta(fmt(audio.currentTime) + ' / ' + fmt(audio.duration));
-    });
-    audio.addEventListener('ended', function () { setIcon(false); if (fill) fill.style.width = '0%'; });
-    if (playBtn) {
-      playBtn.addEventListener('click', function () {
-        if (audio.paused) {
-          var p = audio.play();
-          if (p && p.catch) {
-            p.then(function () { setIcon(true); }).catch(function () {
-              setIcon(false);
-              toast('The song is still on its way. Check back soon.');
-            });
-          } else { setIcon(true); }
-        } else {
-          audio.pause();
-          setIcon(false);
-        }
-      });
-    }
-  }
+  window.__j = {
+    photos: function () { return document.querySelectorAll('[data-photo]').length; },
+    hearts: function () { return hearts.length; },
+    petals: function () { return petals.length; }
+  };
 })();
 </script>
 </body>
